@@ -324,7 +324,25 @@ module.exports = function(defaultFuncs, api, ctx) {
           return callback(resData);
         }
 
-        return callback(null, resData);
+        try
+        {
+          var result = null;
+          resData = resData.jsmods.require[1][3][1].comments[0];
+          result = {
+            text: resData.body.text,
+            id: resData.id,
+            fbid: resData.fbid,
+            author: resData.author,
+            created_date: resData.timestamp.time
+          };
+        }
+        catch(exc)
+        {
+          callback({error: 'We were able to comment to the post, but unable to retrive the post info'});
+          return;
+        }
+
+        return callback(null, result);
       })
       .catch(function(err) {
         log.error("ERROR in sendMessage --> ", err);
