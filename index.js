@@ -82,6 +82,7 @@ function buildAPI(globalOptions, html, jar) {
     'getOnlineUsers',
     'getThreadHistory',
     'getThreadList',
+    'fetchUrl',
     'getUserID',
     'getUserInfo',
     'listen',
@@ -90,6 +91,7 @@ function buildAPI(globalOptions, html, jar) {
     'removeUserFromGroup',
     'searchForThread',
     'sendMessage',
+    'sendComment',
     'sendTypingIndicator',
     'setTitle',
   ];
