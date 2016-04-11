@@ -235,7 +235,7 @@ module.exports = function(defaultFuncs, api, ctx) {
       msg = { body: msg };
     }
 
-    var disallowedProperties = Object.keys(msg).filter(prop => !allowedProperties[prop]);
+    var disallowedProperties = Object.keys(msg).filter(function(prop){return !allowedProperties[prop]});
     if (disallowedProperties.length > 0) {
       return callback({error: "Dissallowed props: `" + disallowedProperties.join(', ') + "`"});
     }
@@ -275,8 +275,8 @@ module.exports = function(defaultFuncs, api, ctx) {
     };
 
     handleSticker(msg, form, callback,
-      () => handleAttachment(msg, form, callback,
-        () => handleUrl(msg, form, callback,
-          () => send(form, threadID, messageAndOTID, callback))));
+      function(){return handleAttachment(msg, form, callback,
+        function(){return handleUrl(msg, form, callback,
+          function(){return send(form, threadID, messageAndOTID, callback)})})});
   };
 };

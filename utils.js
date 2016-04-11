@@ -177,7 +177,7 @@ function presenceDecode(str) {
 
 function generatePresence(userID) {
   var time = Date.now();
-  return "E" + presenceEncode(JSON.stringify({
+  var obj = {
     "v": 3,
     "time": parseInt(time / 1000, 10),
     "user": userID,
@@ -190,10 +190,10 @@ function generatePresence(userID) {
       "tw": Math.floor(Math.random() * 4294967295) + 1,
       "at": time
     },
-    "ch":{
-      ["p_" + userID]: 0
-    }
-  }))
+    "ch":{}
+  };
+  obj.ch["p_" + userID] = 0;
+  return "E" + presenceEncode(JSON.stringify(obj));
 }
 
 function generateAccessiblityCookie() {
@@ -354,7 +354,7 @@ function formatDeltaMessage(m){
     body: delta.body,
     threadID: (delta.messageMetadata.threadKey.threadFbId || delta.messageMetadata.threadKey.otherUserFbId).toString(),
     messageID: delta.messageMetadata.messageId,
-    attachments: (delta.attachments || []).map(v => _formatAttachment(v.mercury)),
+    attachments: (delta.attachments || []).map(function(v){return _formatAttachment(v.mercury)}),
     timestamp: delta.messageMetadata.timestamp,
   }
 }

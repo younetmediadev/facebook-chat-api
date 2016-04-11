@@ -195,16 +195,16 @@ module.exports = function(defaultFuncs, api, ctx) {
               defaultFuncs.post("https://www.facebook.com/ajax/mercury/thread_info.php", ctx.jar, participantsForm)
               .then(utils.parseAndCheckLogin(ctx.jar, defaultFuncs))
               .then(function(resData) {
-                message.participantIDs = resData.payload.threads[0].participants.map(id=>id.split(':').pop());
+                message.participantIDs = resData.payload.threads[0].participants.map(function(id){return id.split(':').pop()});
                 message.participants = message.participantIDs;
                 api.getUserInfo(message.participantIDs, function(err, firstThread) {
                   if (err) {
                     throw err;
                   }
 
-                  message.participantsInfo = Object.keys(firstThread).map(key => firstThread[key]);
+                  message.participantsInfo = Object.keys(firstThread).map(function(key){return firstThread[key]});
                   // Rename this?
-                  message.participantNames = message.participantsInfo.map(v => v.name);
+                  message.participantNames = message.participantsInfo.map(function(v){v.name});
                   return globalCallback(null, message);
                 });
               });
