@@ -554,9 +554,11 @@ function parseAndCheckLogin(jar, defaultFuncs) {
         jar.setCookie(cookie2, "https://www.messenger.com");
       }
 
-      if (res.error === 1357001) {
-        throw {error: "Not logged in."};
-      }
+      // System need monitor the error user not login than throw error,
+      // The error should be manage by application then
+      // if (res.error === 1357001) {
+      //   throw {error: "Not logged in."};
+      // }
       return res;
     });
   };
